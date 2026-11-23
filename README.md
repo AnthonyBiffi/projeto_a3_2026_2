@@ -27,7 +27,7 @@ A API usa a `service_role key` somente para convidar médicos e desfazer cadastr
 ## 1. Configuração no Supabase
 
 1. Crie um projeto em https://supabase.com.
-2. **SQL Editor** → execute, nesta ordem, `supabase/migrations/001_schema.sql`, `002_patient_area.sql`, `003_staff_panels.sql`, `004_sync_existing_auth_users.sql` e `005_server_service_role_permissions.sql`.
+2. **SQL Editor** → execute, nesta ordem, `supabase/migrations/001_schema.sql`, `002_patient_area.sql`, `003_staff_panels.sql`, `004_sync_existing_auth_users.sql`, `005_server_service_role_permissions.sql` e `006_seed_demo_user_permissions.sql` se for carregar contas de demonstração.
 3. **Authentication → Providers → Email**: mantenha **Confirm email** ligado e defina senha mínima de 8+ caracteres.
 4. **Authentication → URL Configuration**: `Site URL` = `http://localhost:5173`; em *Redirect URLs* adicione `http://localhost:5173/**` (inclui o retorno de confirmação em `/auth/callback`).
 5. **Authentication → SMTP Settings**: configure um SMTP próprio (o padrão do Supabase tem limite baixo de e-mails por hora e serve só para testes). Convites de médicos dependem disso.
