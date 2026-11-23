@@ -14,7 +14,7 @@ export const idParamSchema = z.object({
 
 export const createDoctorSchema = z.object({
   name: z.string().trim().min(3).max(150),
-  email: z.string().email(),
+  email: z.string().trim().email().transform((value) => value.toLowerCase()),
   specialty: z.string().trim().min(2).max(100),
   phone: z.string().optional(),
   crm: z.string().trim().min(3).max(30),

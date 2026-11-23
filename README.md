@@ -27,13 +27,25 @@ A API usa a `service_role key` somente para convidar médicos e desfazer cadastr
 ## 1. Configuração no Supabase
 
 1. Crie um projeto em https://supabase.com.
-2. **SQL Editor** → execute, nesta ordem, `supabase/migrations/001_schema.sql`, `002_patient_area.sql` e `003_staff_panels.sql`.
+2. **SQL Editor** → execute, nesta ordem, `supabase/migrations/001_schema.sql`, `002_patient_area.sql`, `003_staff_panels.sql`, `004_sync_existing_auth_users.sql` e `005_server_service_role_permissions.sql`.
 3. **Authentication → Providers → Email**: mantenha **Confirm email** ligado e defina senha mínima de 8+ caracteres.
-4. **Authentication → URL Configuration**: `Site URL` = `http://localhost:5173`; em *Redirect URLs* adicione `http://localhost:5173/**`.
+4. **Authentication → URL Configuration**: `Site URL` = `http://localhost:5173`; em *Redirect URLs* adicione `http://localhost:5173/**` (inclui o retorno de confirmação em `/auth/callback`).
 5. **Authentication → SMTP Settings**: configure um SMTP próprio (o padrão do Supabase tem limite baixo de e-mails por hora e serve só para testes). Convites de médicos dependem disso.
 6. **Authentication → Email Templates**: personalize *Confirm signup*, *Invite user* e *Reset password* se quiser. Os links de convite e de recuperação levam para `/definir-senha` (já existe no front).
 7. **Project Settings → API**: copie `Project URL`, `anon public` e `service_role`. A `service_role` é secreta e fica **só** no `server/.env`.
 8. **Conta do administrador**: em **Authentication → Users → Add user**, crie `anthonymendesbiffi@gmail.com` com senha e marque **Auto Confirm User**. O trigger cria o perfil `admin` automaticamente. (Qualquer outro e-mail jamais recebe esse papel.)
+
+Se o login mostrar que `public.profiles` não está disponível, confirme no SQL Editor:
+
+```sql
+select to_regclass('public.profiles');
+```
+
+Se retornar `NULL`, execute as migrações `001` a `004` acima, nessa ordem. Se retornar `public.profiles`, mas a API continuar sem encontrar a tabela, atualize o cache do PostgREST:
+
+```sql
+notify pgrst, 'reload schema';
+```
 
 ## 2. Back-end
 

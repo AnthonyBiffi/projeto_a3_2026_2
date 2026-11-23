@@ -305,6 +305,10 @@ grant insert, update, delete on public.doctor_schedules to authenticated; -- ide
 grant update on public.patients to authenticated;                  -- limitado à própria linha
 grant select on public.doctors_public to authenticated;
 
+-- Server-only operations: admin profile check and rollback of a partial doctor creation.
+grant select on public.profiles to service_role;
+grant delete on public.doctors to service_role;
+
 revoke execute on all functions in schema public from public, anon;
 grant execute on function public.get_available_slots(uuid, date) to authenticated;
 grant execute on function public.book_appointment(uuid, date, time, visit_modality, text) to authenticated;

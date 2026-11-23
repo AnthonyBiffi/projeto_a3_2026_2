@@ -5,9 +5,11 @@ import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 import ForgotPassword from './pages/auth/ForgotPassword';
 import SetPassword from './pages/auth/SetPassword';
+import AuthCallback from './pages/auth/AuthCallback';
 import Profile from './pages/patient/Profile';
 import BookingSoon from './pages/patient/BookingSoon';
-import StaffPending from './pages/staff/StaffPending';
+import DoctorPanel from './pages/staff/DoctorPanel';
+import AdminPanel from './pages/staff/AdminPanel';
 import PatientLayout from './layouts/PatientLayout';
 import ProtectedRoute from './routes/ProtectedRoute';
 import NotFound from './pages/NotFound';
@@ -24,6 +26,7 @@ export default function App() {
           <Route path="/entrar" element={<Login />} />
           <Route path="/esqueci-senha" element={<ForgotPassword />} />
           <Route path="/definir-senha" element={<SetPassword />} />
+          <Route path="/auth/callback" element={<AuthCallback />} />
 
           <Route element={<ProtectedRoute roles={['patient']} />}>
             <Route element={<PatientLayout />}>
@@ -35,11 +38,11 @@ export default function App() {
 
           <Route
             path="/medico"
-            element={<ProtectedRoute roles={['doctor']} element={<StaffPending role="medico" />} />}
+            element={<ProtectedRoute roles={['doctor']} element={<DoctorPanel />} />}
           />
           <Route
             path="/admin"
-            element={<ProtectedRoute roles={['admin']} element={<StaffPending role="admin" />} />}
+            element={<ProtectedRoute roles={['admin']} element={<AdminPanel />} />}
           />
 
           <Route path="*" element={<NotFound />} />

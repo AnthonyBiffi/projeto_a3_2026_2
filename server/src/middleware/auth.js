@@ -8,8 +8,10 @@ export async function requireAuth(req, _res, next) {
   if (!token) return next(new HttpError(401, 'Autenticação necessária'));
 
   const db = createUserClient(token);
-  const { data, error } = await db.auth.getUser();
-  if (error || !data.user) return next(new HttpError(401, 'Token inválido ou expirado'));
+  const { data, error } = await db.auth.getUser(token);
+  if (error || !data.user) {
+    return next(new HttpError(401, `Token Supabase inválido ou expirado${error?.message ? `: ${error.message}` : ''}`));
+  }
 
   req.user = data.user;
   req.db = db;
