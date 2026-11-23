@@ -2,6 +2,15 @@
 
 CRM de agendamento médico: React + Vite (front), Node + Express (API), Supabase (Auth + PostgreSQL + RLS).
 
+## Estrutura do projeto
+
+```text
+client/                 Front-end React + Vite
+server/                 API Express
+supabase/migrations/    Migrações do banco
+package.json            Workspaces e comandos principais
+```
+
 **Status:** Blocos 1 e 2 concluídos (banco, back-end, autenticação, tela inicial, cadastro/login e área do paciente). O agendamento (bloco 3) e os painéis de médico e admin vêm a seguir.
 
 ## Como a segurança está dividida
@@ -18,7 +27,7 @@ A API usa a `service_role key` somente para convidar médicos e desfazer cadastr
 ## 1. Configuração no Supabase
 
 1. Crie um projeto em https://supabase.com.
-2. **SQL Editor** → execute, nesta ordem, `supabase/migrations/001_schema.sql` e depois `supabase/migrations/002_patient_area.sql`.
+2. **SQL Editor** → execute, nesta ordem, `supabase/migrations/001_schema.sql`, `002_patient_area.sql` e `003_staff_panels.sql`.
 3. **Authentication → Providers → Email**: mantenha **Confirm email** ligado e defina senha mínima de 8+ caracteres.
 4. **Authentication → URL Configuration**: `Site URL` = `http://localhost:5173`; em *Redirect URLs* adicione `http://localhost:5173/**`.
 5. **Authentication → SMTP Settings**: configure um SMTP próprio (o padrão do Supabase tem limite baixo de e-mails por hora e serve só para testes). Convites de médicos dependem disso.
